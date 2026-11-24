@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-legal-ops"
+version = "0.1.0"
+description = "Servidor MCP que expõe a operação de um escritório de advocacia (fictício) a agentes de IA: processos, prazos em dias úteis, andamentos e KPIs."
+readme = "README.md"
+requires-python = ">=3.13"
+license = "MIT"
+authors = [{ name = "Matheus Raul" }]
+dependencies = [
+    "mcp>=2.3,<3",
+]
+
+[project.optional-dependencies]
+agente = [
+    "anthropic>=2.13",
+    "google-genai>=3.6",
+]
+dev = [
+    "pytest>=9",
+    "ruff>=0.17",
+]
+
+[project.scripts]
+mcp-legal-ops = "legal_ops.server:main"
+legal-ops-seed = "legal_ops.seed:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+legal_ops = ["conhecimento/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
